@@ -12,7 +12,7 @@ const port = 3000;
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-// Define the directory for file storage
+//the directory for file storage
 const uploadDirectory = 'uploads';
 
 // Ensure that the directory for file storage exists
