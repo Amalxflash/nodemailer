@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Email</title>
+    <link rel="stylesheet" href="./style.css">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+    <div class="container">
+        <h1>Send an Email</h1>
+        <form id="emailForm" enctype="multipart/form-data"> <!-- Add enctype for file upload -->
+            <label for="username">Your Name:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="to">To:
+                    <div class="info-container">
+                        <span class="question-icon">?</span>
+                        <span class="tooltip-text">Enter multiple email addresses separated by commas</span>
+                      </div>
+                </span>
+            </label>
+            <input type="text" id="to" name="to" required>
+
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" name="subject" required>
+
+            <label for="image">Upload Image:</label>
+            <input type="file" id="image" name="image">
+
+            <button type="submit">Send Email</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('emailForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const to = document.getElementById('to').value;
+            const subject = document.getElementById('subject').value;
+            const image = document.getElementById('image').files[0];
+
+            const formData = new FormData();
+            formData.append('username', username);
+            formData.append('to', to);
+            formData.append('subject', subject);
+            formData.append('image', image);
+
+            const response = await fetch('/send-email', {
+            method: 'POST',
+            body: formData, // Send the FormData object directly
+        });
+
+        const result = await response.json();
+        alert(result.message);
+    });
+</script>
+</body>
+</html>
